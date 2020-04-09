@@ -28,7 +28,7 @@
   from { width: 0%; }
 }
 .progress-bar{
-  animation: expandWidth 1s;
+  animation: expandWidth 8s;
 }
 
 .warna-custom-background {
