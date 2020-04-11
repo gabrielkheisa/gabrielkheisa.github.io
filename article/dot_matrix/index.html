@@ -57,7 +57,7 @@
    
     <div id="home" class="collapse show">
 
-      <div class="card card-body py-5 show">
+      <div class="card card-body py-5 show overflow-auto">
 
           <h3>Dot Matrix clock</h3>
           <p>Simple dot matrix (8x32) clock that syncs with NTP server. I used MD_MAX72XX module using SPI protocol. Using time.google.com as 
@@ -84,17 +84,17 @@
 // MD_MAX72XX is the driver module for the dot matrix display
 // MD_MAX72XX library can be found at https://github.com/MajicDesigns/MD_MAX72XX
 
-#include < MD_Parola.h>
-#include < MD_MAX72xx.h>
-#include < SPI.h>
+#include &lt;MD_Parola.h>
+#include &lt;MD_MAX72xx.h>
+#include &lt;SPI.h>
 
 //Original library from : https://github.com/arduino-libraries/NTPClient/blob/master/NTPClient.cpp
 //I modified the NTPClient.cpp file, so the return value from that .cpp always fits the Matrix Display. 
-#include < NTPClient.h>
+#include &lt;NTPClient.h>
 
-#include < ESP8266WiFi.h>
-#include < ESP8266WebServer.h>
-#include < WiFiUdp.h>
+#include &lt;ESP8266WiFi.h>
+#include &lt;ESP8266WebServer.h>
+#include &lt;WiFiUdp.h>
 
 const long utcOffsetInSeconds = 7 * 60 * 60 + 1;
 WiFiUDP ntpUDP;
