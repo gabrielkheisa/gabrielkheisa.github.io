@@ -50,6 +50,15 @@
   letter-spacing: 3px;
 }
 
+.kastem-background-404 {
+  background-image: url("../img/arduino-404.png");
+  opacity: 1;
+  height: 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
 
 
 
