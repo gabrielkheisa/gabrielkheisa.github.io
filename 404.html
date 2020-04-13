@@ -12,7 +12,7 @@
     crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/5.3.0/ekko-lightbox.css" />
   <link rel="stylesheet" href="https://gabrielkheisa.github.io/css/style.css">
-  <title>Bio : Gabriel Kheisa</title>
+  <title>404 - Not Found</title>
 </head>
 
 <body>
@@ -59,6 +59,16 @@
         <div class="card py-5 show overflow-auto text-center kastem-background-404">
                 <h1>Page doesn't exist</h1>
                 <p>404 : not found</p>
+                
+                <hr>
+
+                <div id="instagram-feed-demo" class="instagram_feed">
+                  </div>
+                  
+                  <hr>
+        
+                  <div id="instagram-feed-demo2" class="instagram_feed">
+                    </div>
  
       </div>
     </div>
@@ -77,6 +87,27 @@
   <script src="https://gabrielkheisa.github.io/js/bootstrap.min.js"
     c></script>
   <script src="https://gabrielkheisa.github.io/js/ekko-lightbox.min.js"></script>
+
+  <script src="https://gabrielkheisa.github.io/js/ig/jquery.instagramFeed.js"></script>
+  <script>
+  $(window).on('load', function(){
+      $.instagramFeed({
+        'username': 'gabriel_kheisa',
+        'container': "#instagram-feed-demo",
+        'margin': 1
+      });
+    });
+    </script>
+
+  <script>
+    $(window).on('load', function(){
+        $.instagramFeed({
+          'username': 'arduino_craft',
+          'container': "#instagram-feed-demo2",
+          'margin': 1
+        });
+      });
+    </script>
 
   <script>
     $('.port-item').click(function () {

@@ -353,13 +353,23 @@
         </span>
       </div>
 
+      <div class="card card-body pt-5">
+
+          <div id="instagram-feed-demo" class="instagram_feed">
+          </div>
+          
+          <hr>
+
+          <div id="instagram-feed-demo2" class="instagram_feed">
+            </div>
+
+      </div>
+
       <div class="list-group">
 
          <a href="https://www.youtube.com/gabrielkheisa" class="list-group-item list-group-item-action">YouTube - Gabriel Kheisa</a>
           <a href="http://instagram.com/gabriel_kheisa" class="list-group-item list-group-item-action">Instagram - Gabriel Kheisa</a>
           <a href="http://instagram.com/arduino_craft" class="list-group-item list-group-item-action">Instagram - Arduino Craft</a>
-
-          
 
         </div>
 
@@ -381,6 +391,28 @@
   <script src="js/bootstrap.min.js"
     c></script>
   <script src="js/ekko-lightbox.min.js"></script>
+
+  <script src="js/ig/jquery.instagramFeed.js"></script>
+  <script>
+  $(window).on('load', function(){
+      $.instagramFeed({
+        'username': 'gabriel_kheisa',
+        'container': "#instagram-feed-demo",
+        'margin': 1
+      });
+    });
+    </script>
+
+  <script>
+    $(window).on('load', function(){
+        $.instagramFeed({
+          'username': 'arduino_craft',
+          'container': "#instagram-feed-demo2",
+          'margin': 1
+        });
+      });
+    </script>
+
 
   <script>
     $('.port-item').click(function () {
