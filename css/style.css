@@ -68,6 +68,13 @@
   background-size: cover;
 }
 
-
+.kastem-background-nodemcu {
+  background-image: url("https://gabrielkheisa.github.io/img/nodemcu");
+  opacity: 1;
+  height: 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
 
 

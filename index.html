@@ -80,7 +80,7 @@
         <p class="lead">Beginner HTML + CSS (with Bootstrap) user, noob in JavaScript, newbie in C++, pro in Arduino :v</p>
       </div>
 
-      <div class="card card-body py-5">
+      <div class="card card-body py-5 kastem-background-nodemcu">
         <h3>About me</h3>
         <p>2019 Electronics and Instrumentation student, Gadjah Mada University</p>
         <hr>
@@ -309,14 +309,13 @@
 
         <h3>Visual Design projects and photography</h3>
       
+        <a href="https://maps.app.goo.gl/PczKV2eUE9yKavvo7" class="list-group-item list-group-item-action">Google Maps Photography</a>
         <a href="https://www.instagram.com/p/B-zNLiQn0rx/?utm_source=ig_web_button_share_sheet" class="list-group-item list-group-item-action">Circuit masking animation</a>
+        <a href="https://www.instagram.com/s/aGlnaGxpZ2h0OjE3OTM1NjcyNTczMzA1OTA5?igshid=15z3cm8veycrb&story_media_id=2077044760698637811_1505275729" class="list-group-item list-group-item-action">Night Photography</a>
         <a href="https://www.instagram.com/p/B-zOF0NnD7T/?utm_source=ig_web_copy_link" class="list-group-item list-group-item-action">Momtreprenur intro, PPSMB</a>
         <a href="https://www.instagram.com/p/B-zPcbpnS30/?utm_source=ig_web_copy_link" class="list-group-item list-group-item-action">HMEI Intro, original logo created by HMEI UGM</a>
-        <a href="https://www.instagram.com/p/B-zkUZHH8vH/?utm_source=ig_web_copy_link" class="list-group-item list-group-item-action">Photoshop, Jakarta to New York</a>
-        <a href="https://www.instagram.com/p/B-zkYEJH_sr/?utm_source=ig_web_copy_link" class="list-group-item list-group-item-action">Photoshop, Jakarta to Sydney</a>
-        <a href="https://www.instagram.com/p/B-z0ex7H3dk/?utm_source=ig_web_copy_link" class="list-group-item list-group-item-action">Photoshop, Journey to The Italic World</a>
-        <a href="https://www.instagram.com/s/aGlnaGxpZ2h0OjE3OTM1NjcyNTczMzA1OTA5?igshid=15z3cm8veycrb&story_media_id=2077044760698637811_1505275729" class="list-group-item list-group-item-action">Night Photography</a>
-       
+        <a href="https://instagram.com/gabriel_kheisa.arts" class="list-group-item list-group-item-action font-weight-bold">More...</a>
+        
         
         <hr>
 
@@ -362,6 +361,11 @@
 
           <div id="instagram-feed-demo2" class="instagram_feed">
             </div>
+
+          <hr>
+
+          <div id="instagram-feed-demo3" class="instagram_feed">
+          </div>
 
       </div>
 
@@ -412,6 +416,17 @@
         });
       });
     </script>
+
+<script>
+  $(window).on('load', function(){
+      $.instagramFeed({
+        'username': 'gabriel_kheisa.arts',
+        'container': "#instagram-feed-demo3",
+        'margin': 1,
+        'items' : 4
+      });
+    });
+  </script>
 
 
   <script>
