@@ -6,10 +6,10 @@
   <meta name="google-site-verification" content="842xad3R5gOOwua6dR_OSalwoUG7hoy2nhwH4bDxT7A" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp"
-    crossorigin="anonymous">
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB"
-    crossorigin="anonymous">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css"
+    integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"
+    integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/5.3.0/ekko-lightbox.css" />
   <link rel="stylesheet" href="../../css/style.css">
   <title>Dot Matrix Clock</title>
@@ -54,444 +54,91 @@
       </div>
     </header>
 
-   
+
     <div id="home" class="collapse show">
 
       <div class="card card-body py-5 show overflow-auto">
 
-          <h3>Dot Matrix Clock</h3>
-          <p>Simple dot matrix (8x32) clock that syncs with NTP server. I used MD_MAX72XX module using SPI protocol. Using time.google.com as 
-            NTP server is recommended because it syncs faster than pool.ntp.org by few milliseconds. Using millis() function, NodeMCU syncs every 
-            one hour to eliminate Wi-Fi usage, so it won't disturb other Wi-Fi devices. To make display more interactive, I added "|" animation as 
-            "connecting to NTP server" indicator and "." animation that blinks every second. To ensure that formatted time, date, and day fit the 
-            display, I modified some functions in NTPClient.cpp but if you have a bigger display resolution (bigger than 8x32), you can use original 
-            NTPClient.cpp library.
-          </p>
+        <h3>Dot Matrix Clock</h3>
+        <p>Simple dot matrix (8x32) clock that syncs with NTP server. I used MD_MAX72XX module using SPI protocol. Using
+          time.google.com as
+          NTP server is recommended because it syncs faster than pool.ntp.org by few milliseconds. Using millis()
+          function, NodeMCU syncs every
+          one hour to eliminate Wi-Fi usage, so it won't disturb other Wi-Fi devices. To make display more interactive,
+          I added "|" animation as
+          "connecting to NTP server" indicator and "." animation that blinks every second. To ensure that formatted
+          time, date, and day fit the
+          display, I modified some functions in NTPClient.cpp but if you have a bigger display resolution (bigger than
+          8x32), you can use original
+          NTPClient.cpp library.
+        </p>
 
         <img src="../../img/dot_matrix.jpg" class="rounded mx-auto d-block img-fluid mb-3">
         <hr>
-        
+
         <p>
         </p>
-          
-          <h5>.ino</h5>
 
-          <div class="card card-body show mb-5">
+        <h5>.ino</h5>
+        <button type="button" onclick="code1()" class="btn btn-light btn-sm">Copy</button>
 
-           <code>
-             <pre>
+        <div class="card card-body show mb-5">
 
-// MD_MAX72XX is the driver module for the dot matrix display
-// MD_MAX72XX library can be found at https://github.com/MajicDesigns/MD_MAX72XX
 
-#include &lt;MD_Parola.h>
-#include &lt;MD_MAX72xx.h>
-#include &lt;SPI.h>
+          <div id="list">
+            <p><iframe src="code_ino.txt" frameborder="0" height="800px" width="100%" id="code_ino"></iframe></p>
+          </div>
 
-//Original library from : https://github.com/arduino-libraries/NTPClient/blob/master/NTPClient.cpp
-//I modified the NTPClient.cpp file, so the return value from that .cpp always fits the Matrix Display. 
-#include &lt;NTPClient.h>
 
-#include &lt;ESP8266WiFi.h>
-#include &lt;ESP8266WebServer.h>
-#include &lt;WiFiUdp.h>
+        </div>
 
-const long utcOffsetInSeconds = 7 * 60 * 60 + 1;
-WiFiUDP ntpUDP;
-NTPClient timeClient(ntpUDP, "time.google.com", utcOffsetInSeconds);
+        <h5>Modified NTPClient.cpp</h5>
+        <button type="button" onclick="code2() btn-sm" class="btn btn-light btn-sm">Copy</button>
 
+        <div class="card card-body show mb-5">
 
-/* Put your SSID & Password */
-const char* ssid = "xxxxxxxx"; // Enter SSID here
-const char* password = "xxxxxxxx"; //Enter Password here
+          <p><iframe src="code_cpp.txt" frameborder="0" height="800px" width="100%" id="code_cpp"></iframe></p>
+        </div>
 
-/* NodeMCU syncs with NTP server every one hour  */
-int jam_mtbs = 1000 * 3600 * 1;
-long jam_lasttime;
+        <div class="card card-body show mb-5">
+          <iframe width="auto" height="753" src="https://www.youtube.com/embed/eyJCsX_3eEo" frameborder="0"
+            allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
 
-String jamTeks = (String)timeClient.getMinutes();
-int jamGerak = jamTeks.toInt();
-
-#define HARDWARE_TYPE MD_MAX72XX::FC16_HW
-#define MAX_DEVICES 4
-#define CS_PIN    D4
-
-// Hardware SPI connection
-MD_Parola P = MD_Parola(HARDWARE_TYPE, CS_PIN, MAX_DEVICES);
-
-//Define day in array
-//String Hari_teks[7] = { "Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu" };
-String Hari_teks[7] = { "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat" };
-
-//odd even program, for second "dot" animation
-//if genapganjil == false --> show day
-//   genapganjil == true  --> show date
-bool genapganjil = false;
-
-
-
-void setup(void)
-{
-  P.begin();
-  Serial.begin(9600);
-  WiFi.mode(WIFI_STA);
-  WiFi.begin(ssid, password);
-
-//just a simple animation indicating "Connecting to Wi-FI or NTP server"
-//If the connection to the NTP server fails, animation loops
-  while (!timeClient.update()) {
-    P.print("|");
-    delay(10);
-    P.print("||");
-    delay(10);
-    P.print("|||");
-    delay(10);
-    P.print("||||");
-    delay(10);
-    P.print("|||||");
-    delay(10);
-    P.print("||||||");
-    delay(10);
-    P.print("|||||||");
-    delay(10);
-    P.print("||||||||");
-    delay(10);
-    P.print("|||||||||");
-    delay(10);
-    P.print("||||||||||");
-    delay(10);
-    P.print("|||||||||||");
-    delay(10);
-    P.print("||||||||||||");
-    delay(10);
-    P.print("|||||||||||||");
-    delay(10);
-    P.print("||||||||||||||");
-    delay(10);
-    P.print("|||||||||||||||");
-    delay(10);
-    P.print("||||||||||||||||");
-    delay(10);
-    timeClient.update();
-  }
-}
-
-void loop(void)
-{
-
-  if ((int)timeClient.getSeconds() % 5 == 0) {
-    if (!genapganjil) {
-      P.print("" + Hari_teks[timeClient.getDay()]);
-    }
-    else if (genapganjil) {
-      P.print("" + timeClient.getFormattedDate());
-    }
-    else {}
-  }
-  else {
-    if ((int)timeClient.getSeconds() % 2 == 0) {
-      P.print((String)timeClient.getFormattedTime());
-      genapganjil = true;
-    }
-    else {
-      P.print((String)timeClient.getFormattedTime() + ".");
-      genapganjil = false;
-    }
-  }
-
-  if (millis() > jam_lasttime + jam_mtbs)
-  {
-      timeClient.update();
-    while (!timeClient.update()) {
-      timeClient.update();
-      P.print("- UwU -");
-    }
-  }
-  jam_lasttime = millis();
-}
-</pre>
-</code>
-
-</div>
-
-<h5>Modified NTPClient.cpp</h5>
-
-<div class="card card-body show mb-5">
-<code>
-    <pre>
-
-/**
- * The MIT License (MIT)
- * Copyright (c) 2015 by Fabrice Weinberg
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
- */
-
-#include "NTPClient.h" 
-
-NTPClient::NTPClient(UDP& udp) {
-  this->_udp            = &udp;
-}
-
-NTPClient::NTPClient(UDP& udp, int timeOffset) {
-  this->_udp            = &udp;
-  this->_timeOffset     = timeOffset;
-}
-
-NTPClient::NTPClient(UDP& udp, const char* poolServerName) {
-  this->_udp            = &udp;
-  this->_poolServerName = poolServerName;
-}
-
-NTPClient::NTPClient(UDP& udp, const char* poolServerName, int timeOffset) {
-  this->_udp            = &udp;
-  this->_timeOffset     = timeOffset;
-  this->_poolServerName = poolServerName;
-}
-
-NTPClient::NTPClient(UDP& udp, const char* poolServerName, int timeOffset, unsigned long updateInterval) {
-  this->_udp            = &udp;
-  this->_timeOffset     = timeOffset;
-  this->_poolServerName = poolServerName;
-  this->_updateInterval = updateInterval;
-}
-
-void NTPClient::begin() {
-  this->begin(NTP_DEFAULT_LOCAL_PORT);
-}
-
-void NTPClient::begin(int port) {
-  this->_port = port;
-
-  this->_udp->begin(this->_port);
-
-  this->_udpSetup = true;
-}
-
-bool NTPClient::isValid(byte * ntpPacket)
-{
-	//Perform a few validity checks on the packet
-	if((ntpPacket[0] & 0b11000000) == 0b11000000)		//Check for LI=UNSYNC
-		return false;
-		
-	if((ntpPacket[0] & 0b00111000) >> 3 < 0b100)		//Check for Version >= 4
-		return false;
-		
-	if((ntpPacket[0] & 0b00000111) != 0b100)			//Check for Mode == Server
-		return false;
-		
-	if((ntpPacket[1] < 1) || (ntpPacket[1] > 15))		//Check for valid Stratum
-		return false;
-
-	if(	ntpPacket[16] == 0 && ntpPacket[17] == 0 && 
-		ntpPacket[18] == 0 && ntpPacket[19] == 0 &&
-		ntpPacket[20] == 0 && ntpPacket[21] == 0 &&
-		ntpPacket[22] == 0 && ntpPacket[22] == 0)		//Check for ReferenceTimestamp != 0
-		return false;
-
-	return true;
-}
-
-bool NTPClient::forceUpdate() {
-  #ifdef DEBUG_NTPClient
-    Serial.println("Update from NTP Server");
-  #endif
-
-  this->sendNTPPacket();
-
-  // Wait till data is there or timeout...
-  byte timeout = 0;
-  int cb = 0;
-  do {
-    delay ( 10 );
-    cb = this->_udp->parsePacket();
-    
-    if(cb > 0)
-    {
-      this->_udp->read(this->_packetBuffer, NTP_PACKET_SIZE);
-      if(!this->isValid(this->_packetBuffer))
-        cb = 0;
-    }
-    
-    if (timeout > 100) return false; // timeout after 1000 ms
-    timeout++;
-  } while (cb == 0);
-
-  this->_lastUpdate = millis() - (10 * (timeout + 1)); // Account for delay in reading the time
-
-  unsigned long highWord = word(this->_packetBuffer[40], this->_packetBuffer[41]);
-  unsigned long lowWord = word(this->_packetBuffer[42], this->_packetBuffer[43]);
-  // combine the four bytes (two words) into a long integer
-  // this is NTP time (seconds since Jan 1 1900):
-  unsigned long secsSince1900 = highWord << 16 | lowWord;
-
-  this->_currentEpoc = secsSince1900 - SEVENZYYEARS;
-
-  return true;
-}
-
-bool NTPClient::update() {
-  if ((millis() - this->_lastUpdate >= this->_updateInterval)     // Update after _updateInterval
-    || this->_lastUpdate == 0) {                                // Update if there was no update yet.
-    if (!this->_udpSetup) this->begin();                         // setup the UDP client if needed
-    return this->forceUpdate();
-  }
-  return true;
-}
-
-unsigned long NTPClient::getEpochTime() {
-  return this->_timeOffset + // User offset
-         this->_currentEpoc + // Epoc returned by the NTP server
-         ((millis() - this->_lastUpdate) / 1000); // Time since last update
-}
-
-int NTPClient::getDay() {
-  return (((this->getEpochTime()  / 86400L) + 4 ) % 7); //0 is Sunday
-}
-int NTPClient::getHours() {
-  return ((this->getEpochTime()  % 86400L) / 3600);
-}
-int NTPClient::getMinutes() {
-  return ((this->getEpochTime() % 3600) / 60);
-}
-int NTPClient::getSeconds() {
-  return (this->getEpochTime() % 60);
-}
-
-String NTPClient::getFormattedTime(unsigned long secs) {
-  unsigned long rawTime = secs ? secs : this->getEpochTime();
-  unsigned long hours = (rawTime % 86400L) / 3600;
-  String hoursStr = hours < 10 ? "0" + String(hours) : String(hours);
-
-  unsigned long minutes = (rawTime % 3600) / 60;
-  String minuteStr = minutes < 10 ? "0" + String(minutes) : String(minutes);
-
-  unsigned long seconds = rawTime % 60;
-  String secondStr = seconds < 10 ? "0" + String(seconds) : String(seconds);
-
-  //return hoursStr + ":" + minuteStr + ":" + secondStr; biar muat buat dot matrix
-  return hoursStr + ":" + minuteStr;
-}
-
-// Based on https://github.com/PaulStoffregen/Time/blob/master/Time.cpp
-// currently assumes UTC timezone, instead of using this->_timeOffset
-String NTPClient::getFormattedDate(unsigned long secs) {
-  unsigned long rawTime = (secs ? secs : this->getEpochTime()) / 86400L;  // in days
-  unsigned long days = 0, year = 1970;
-  uint8_t month;
-  static const uint8_t monthDays[]={31,28,31,30,31,30,31,31,30,31,30,31};
-
-  while((days += (LEAP_YEAR(year) ? 366 : 365)) <= rawTime)
-    year++;
-  rawTime -= days - (LEAP_YEAR(year) ? 366 : 365); // now it is days in this year, starting at 0
-  days=0;
-  for (month=0; month<12; month++) {
-    uint8_t monthLength;
-    if (month==1) { // february
-      monthLength = LEAP_YEAR(year) ? 29 : 28;
-    } else {
-      monthLength = monthDays[month];
-    }
-    if (rawTime < monthLength) break;
-    rawTime -= monthLength;
-  }
-  String monthStr = ++month < 10 ? "0" + String(month) : String(month); // jan is month 1  
-  String dayStr = ++rawTime < 10 ? "0" + String(rawTime) : String(rawTime); // day of month  
-  //return String(year) + "-" + monthStr + "-" + dayStr + "T" + this->getFormattedTime(secs ? secs : 0) + "Z";
-  return dayStr + "-" + monthStr;
-}
-
-void NTPClient::end() {
-  this->_udp->stop();
-
-  this->_udpSetup = false;
-}
-
-void NTPClient::setTimeOffset(int timeOffset) {
-  this->_timeOffset     = timeOffset;
-}
-
-void NTPClient::setUpdateInterval(unsigned long updateInterval) {
-  this->_updateInterval = updateInterval;
-}
-
-void NTPClient::sendNTPPacket() {
-  // set all bytes in the buffer to 0
-  memset(this->_packetBuffer, 0, NTP_PACKET_SIZE);
-  // Initialize values needed to form NTP request
-  // (see URL above for details on the packets)
-  this->_packetBuffer[0] = 0b11100011;   // LI, Version, Mode
-  this->_packetBuffer[1] = 0;     // Stratum, or type of clock
-  this->_packetBuffer[2] = 6;     // Polling Interval
-  this->_packetBuffer[3] = 0xEC;  // Peer Clock Precision
-  // 8 bytes of zero for Root Delay & Root Dispersion
-  this->_packetBuffer[12]  = 0x49;
-  this->_packetBuffer[13]  = 0x4E;
-  this->_packetBuffer[14]  = 0x49;
-  this->_packetBuffer[15]  = 0x52;
-
-  // all NTP fields have been given values, now
-  // you can send a packet requesting a timestamp:
-  this->_udp->beginPacket(this->_poolServerName, 123); //NTP requests are to port 123
-  this->_udp->write(this->_packetBuffer, NTP_PACKET_SIZE);
-  this->_udp->endPacket();
-}
-
-void NTPClient::setEpochTime(unsigned long secs) {
-  this->_currentEpoc = secs;
-}
-
-</pre>
-</code>
-</div>
-
-<div class="card card-body show mb-5">
-<iframe width="auto" height="753" src="https://www.youtube.com/embed/eyJCsX_3eEo" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-</div>
-
-              <a href="../../index.html">Return to Home</a>
+        <a href="../../index.html">Return to Home</a>
       </div>
     </div>
 
     <!-- FOOTER -->
     <footer id="main-footer" class="p-5 bg-dark text-white">
-        <p class="text-right">2020 Gabriel Kheisa · 100% Open Source</p>
+      <p class="text-right">2020 Gabriel Kheisa · 100% Open Source</p>
     </footer>
   </div>
 
 
-  <script src="../../js/jquery-3.3.1.min.js"
-    ></script>
-  <script src="../../js/popper.min.js"
-    ></script>
-  <script src="../../js/bootstrap.min.js"
-    c></script>
+  <script src="../../js/jquery-3.3.1.min.js"></script>
+  <script src="../../js/popper.min.js"></script>
+  <script src="../../js/bootstrap.min.js" c></script>
   <script src="../../js/ekko-lightbox.min.js"></script>
 
   <script>
-    $('.port-item').click(function () {
-      $('.collapse').collapse('hide');
-    });
+    function copy1() {
+      var copyText = document.getElementById("code_ino");
+      copyText.select();
+      copyText.setSelectionRange(0, 99999)
+      document.execCommand("copy");
+      alert("Copied the text: " + copyText.value);
+    }
 
-    $(document).on('click', '[data-toggle="lightbox"]', function (e) {
-      e.preventDefault();
-      $(this).ekkoLightbox();
-    });
+    function copy2() {
+      var copyText = document.getElementById("code_cpp");
+      copyText.select();
+      copyText.setSelectionRange(0, 99999)
+      document.execCommand("copy");
+      alert("Copied the text: " + copyText.value);
+    }
   </script>
+
 </body>
 
 </html>

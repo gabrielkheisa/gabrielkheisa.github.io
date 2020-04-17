@@ -1,0 +1,128 @@
+// MD_MAX72XX is the driver module for the dot matrix display
+// MD_MAX72XX library can be found at https://github.com/MajicDesigns/MD_MAX72XX
+
+#include <MD_Parola.h>
+#include <MD_MAX72xx.h>
+#include <SPI.h>
+
+//Original library from : https://github.com/arduino-libraries/NTPClient/blob/master/NTPClient.cpp
+//I modified the NTPClient.cpp file, so the return value from that .cpp always fits the Matrix Display. 
+#include <NTPClient.h>
+
+#include <ESP8266WiFi.h>
+#include <ESP8266WebServer.h>
+#include <WiFiUdp.h>
+
+const long utcOffsetInSeconds = 7 * 60 * 60 + 1;
+WiFiUDP ntpUDP;
+NTPClient timeClient(ntpUDP, "time.google.com", utcOffsetInSeconds);
+
+
+/* Put your SSID & Password */
+const char* ssid = "xxxxxxxx"; // Enter SSID here
+const char* password = "xxxxxxxx"; //Enter Password here
+
+/* NodeMCU syncs with NTP server every one hour  */
+int jam_mtbs = 1000 * 3600 * 1;
+long jam_lasttime;
+
+String jamTeks = (String)timeClient.getMinutes();
+int jamGerak = jamTeks.toInt();
+
+#define HARDWARE_TYPE MD_MAX72XX::FC16_HW
+#define MAX_DEVICES 4
+#define CS_PIN    D4
+
+// Hardware SPI connection
+MD_Parola P = MD_Parola(HARDWARE_TYPE, CS_PIN, MAX_DEVICES);
+
+//Define day in array
+//String Hari_teks[7] = { "Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu" };
+String Hari_teks[7] = { "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat" };
+
+//odd even program, for second "dot" animation
+//if genapganjil == false --> show day
+//   genapganjil == true  --> show date
+bool genapganjil = false;
+
+
+
+void setup(void)
+{
+  P.begin();
+  Serial.begin(9600);
+  WiFi.mode(WIFI_STA);
+  WiFi.begin(ssid, password);
+
+//just a simple animation indicating "Connecting to Wi-FI or NTP server"
+//If the connection to the NTP server fails, animation loops
+  while (!timeClient.update()) {
+    P.print("|");
+    delay(10);
+    P.print("||");
+    delay(10);
+    P.print("|||");
+    delay(10);
+    P.print("||||");
+    delay(10);
+    P.print("|||||");
+    delay(10);
+    P.print("||||||");
+    delay(10);
+    P.print("|||||||");
+    delay(10);
+    P.print("||||||||");
+    delay(10);
+    P.print("|||||||||");
+    delay(10);
+    P.print("||||||||||");
+    delay(10);
+    P.print("|||||||||||");
+    delay(10);
+    P.print("||||||||||||");
+    delay(10);
+    P.print("|||||||||||||");
+    delay(10);
+    P.print("||||||||||||||");
+    delay(10);
+    P.print("|||||||||||||||");
+    delay(10);
+    P.print("||||||||||||||||");
+    delay(10);
+    timeClient.update();
+  }
+}
+
+void loop(void)
+{
+
+  if ((int)timeClient.getSeconds() % 5 == 0) {
+    if (!genapganjil) {
+      P.print("" + Hari_teks[timeClient.getDay()]);
+    }
+    else if (genapganjil) {
+      P.print("" + timeClient.getFormattedDate());
+    }
+    else {}
+  }
+  else {
+    if ((int)timeClient.getSeconds() % 2 == 0) {
+      P.print((String)timeClient.getFormattedTime());
+      genapganjil = true;
+    }
+    else {
+      P.print((String)timeClient.getFormattedTime() + ".");
+      genapganjil = false;
+    }
+  }
+
+  if (millis() > jam_lasttime + jam_mtbs)
+  {
+      timeClient.update();
+    while (!timeClient.update()) {
+      timeClient.update();
+      P.print("- UwU -");
+    }
+  }
+  jam_lasttime = millis();
+}
