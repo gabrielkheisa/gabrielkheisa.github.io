@@ -80,24 +80,23 @@
         </p>
 
         <h5>.ino</h5>
-        <button type="button" onclick="code1()" class="btn btn-light btn-sm">Copy</button>
+        
 
         <div class="card card-body show mb-5">
 
 
           <div id="list">
-            <p><iframe src="code_ino.txt" frameborder="0" height="800px" width="100%" id="code_ino"></iframe></p>
+            <p><iframe src="code_ino.txt" frameborder="0" height="390px" width="100%" id="code_ino"></iframe></p>
           </div>
 
 
         </div>
 
         <h5>Modified NTPClient.cpp</h5>
-        <button type="button" onclick="code2() btn-sm" class="btn btn-light btn-sm">Copy</button>
 
         <div class="card card-body show mb-5">
 
-          <p><iframe src="code_cpp.txt" frameborder="0" height="800px" width="100%" id="code_cpp"></iframe></p>
+          <p><iframe src="code_cpp.txt" frameborder="0" height="390px" width="100%" id="code_cpp"></iframe></p>
         </div>
 
         <div class="card card-body show mb-5">
@@ -105,7 +104,7 @@
             allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
         </div>
 
-        <a href="../../index.html">Return to Home</a>
+        <a href="https://gabrielkheisa.github.io">Return to Home</a>
       </div>
     </div>
 
@@ -120,24 +119,6 @@
   <script src="../../js/popper.min.js"></script>
   <script src="../../js/bootstrap.min.js" c></script>
   <script src="../../js/ekko-lightbox.min.js"></script>
-
-  <script>
-    function copy1() {
-      var copyText = document.getElementById("code_ino");
-      copyText.select();
-      copyText.setSelectionRange(0, 99999)
-      document.execCommand("copy");
-      alert("Copied the text: " + copyText.value);
-    }
-
-    function copy2() {
-      var copyText = document.getElementById("code_cpp");
-      copyText.select();
-      copyText.setSelectionRange(0, 99999)
-      document.execCommand("copy");
-      alert("Copied the text: " + copyText.value);
-    }
-  </script>
 
 </body>
 
