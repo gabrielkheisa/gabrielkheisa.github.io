@@ -68,7 +68,7 @@ void main()
     while(1)
     {
        BMP085_Read( BMP085_HIGHRES, &Bar );
-       LongWordToStr( Bar.Altitude, text );
+       LongWordToStr( Bar.Pressao, text );
 
        //tekanan ruang koridor, dimisalkan 10000
        if(Bar.Pressao < 10000){
