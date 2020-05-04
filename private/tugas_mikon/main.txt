@@ -1,0 +1,85 @@
+/*
+    Source code asli untuk BMP085-BMP180:
+    https://libstock.mikroe.com/projects/view/889/bmp085-library
+*/
+
+#include "BMP085.c"
+
+//i2c scanner, untuk mencari address perangkat
+/*
+void i2cScanner() {
+   int count = 0;
+   int i;
+   char text[12];
+   UART1_Write_Text("\n\rStart I2C Scanner..\n\r");
+   for(i=0x00; i < 0xFF; i++) {
+      i2c_start();
+      if(i2c_write(i) == 0) { 
+      IntToStr(i, text);
+      UART1_Write_Text(text);
+      count++;  
+      }
+      i2c_stop();
+   }
+   if(count == 0) {UART1_Write_Text("Nothing Found\n\r"); }
+   else { 
+   IntToStr(i, text);
+   UART1_Write_Text(text); }
+}
+*/
+
+char text[12];
+BMP085 Bar;
+
+void main()
+{
+     /*
+     //scanner I2C, tidak diperlukan jika address sudah ditemukan
+     UART1_init(9600);
+     I2C1_Init(100000);
+     i2cScanner();
+     while(1) {}
+     */
+     
+    //program utama
+    int indicator = 0;
+    UART1_init(9600); //deklarasi baud rate 9600
+    UART1_Write_Text("Start ");
+    ADCON1 = 0x0F;
+
+    //memberikan penanda startup
+    TRISD = 0b00000000; // deklarasi LED indikator sebagai output
+    PORTD = 0b11111111; // pompa mati
+    for(indicator=0; indicator<5; indicator++)
+    {
+      PORTD = 0b01111111; //LED indikator nyala
+      Delay_ms(500);
+      PORTD = 0b11111111; //LED indikator mati
+      Delay_ms(500);
+      //selama (1 * indicator) detik
+    }
+    PORTD = 0b11111111; //LED OFF
+
+    I2C1_Init(100000);  //frekuensi clock I2C
+    UART1_Write_Text("I2C initialized ");
+    BMP085_Init(); //inisialisasi BMP085 atau BMP180 pada BMP085.c
+    UART1_Write_Text("BMP initialized ");
+    
+    while(1)
+    {
+       BMP085_Read( BMP085_HIGHRES, &Bar );
+       LongWordToStr( Bar.Altitude, text );
+
+       //tekanan ruang koridor, dimisalkan 10000
+       if(Bar.Pressao < 10000){
+       PORTD = 0b11111111; //pompa mati
+       }
+       else {
+       PORTD = 0b11111110; //pompa hidup
+       }
+
+       UART1_Write_Text(text);
+       UART1_Write_Text("\r");
+       Delay_ms( 2000 );
+    }
+}
