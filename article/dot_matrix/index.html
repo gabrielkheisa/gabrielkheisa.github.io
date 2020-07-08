@@ -60,6 +60,11 @@
       <div class="card card-body py-5 show overflow-auto">
 
         <h3>Dot Matrix Clock</h3>
+        
+        <div class="text-muted">
+        <p id="Tanggal"></p>
+        </div>
+        
         <p>Simple dot matrix (8x32) clock that syncs with NTP server. I used MD_MAX72XX module using SPI protocol. Using
           time.google.com as
           NTP server is recommended because it syncs faster than pool.ntp.org by few milliseconds. Using millis()
@@ -114,11 +119,18 @@
     </footer>
   </div>
 
-
+  <script src="../../js/moment.js"></script>
   <script src="../../js/jquery-3.3.1.min.js"></script>
   <script src="../../js/popper.min.js"></script>
   <script src="../../js/bootstrap.min.js" c></script>
   <script src="../../js/ekko-lightbox.min.js"></script>
+
+  <script>
+      var tanggal = "2020-04-11";
+      var teks = moment(tanggal).format("MMM Do YYYY");
+      var d = moment(tanggal).fromNow();
+      document.getElementById("Tanggal").innerHTML = teks + ", " + d;
+      </script>
 
 </body>
 

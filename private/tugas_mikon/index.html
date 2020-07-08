@@ -64,7 +64,11 @@
           Monitorisasi tekanan ruang isolasi <br>
           Dengan PIC16F877A dan barometer BMP180/BMP085
         </h5>
-        <div id="Tanggal"></div>
+        
+        <div class="text-muted">
+            <p id="Tanggal"></p>
+            </div>
+
         <p>
           Anggota kelompok : 
         </p>
@@ -160,36 +164,21 @@
     </footer>
   </div>
 
-  <script>
-    (function()
-    {
-      // instantiate a moment object
-      var NowMoment = moment();
-      
-      // instantiate a JavaScript Date object
-      var NowDate = new Date();
-      
 
-      var selisih = moment('Thu Oct 25 2018 17:30:03 GMT+0300').fromNow(true); //eg. 1 day, 2 hours
-      var selisih2 = moment([2007, 0, 29]).fromNow();  
-
-      // display value of moment object in #displayMoment div
-      var eDisplayMoment = document.getElementById('Tanggal');
-      eDisplayMoment.innerHTML = selisih2;
-      
-      // display value of Date object in #displayJsDate div
-      var eDisplayDate = document.getElementById('displayJsDate');
-      eDisplayDate.innerHTML = NowDate;
-    })();
-   
-   
-  </script>
 
   <script src="../../js/moment.js"></script>
   <script src="../../js/jquery-3.3.1.min.js"></script>
   <script src="../../js/popper.min.js"></script>
   <script src="../../js/bootstrap.min.js" c></script>
   <script src="../../js/ekko-lightbox.min.js"></script>
+
+  <script>
+      var tanggal = "2020-05-7";
+      var teks = moment(tanggal).format("MMM Do YYYY");
+      var d = moment(tanggal).fromNow();
+      document.getElementById("Tanggal").innerHTML = teks + ", " + d;
+      </script>
+
 
 </body>
 
