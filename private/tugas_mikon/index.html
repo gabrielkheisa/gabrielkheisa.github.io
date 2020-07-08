@@ -64,6 +64,7 @@
           Monitorisasi tekanan ruang isolasi <br>
           Dengan PIC16F877A dan barometer BMP180/BMP085
         </h5>
+        <div id="Tanggal"></div>
         <p>
           Anggota kelompok : 
         </p>
@@ -159,7 +160,29 @@
     </footer>
   </div>
 
+  <script type="text/javascript">
+    (function()
+    {
+      // instantiate a moment object
+      var NowMoment = moment();
+      
+      // instantiate a JavaScript Date object
+      var NowDate = new Date();
+      
 
+      var selisih = moment('Thu Oct 25 2018 17:30:03 GMT+0300').fromNow(true); //eg. 1 day, 2 hours
+
+      // display value of moment object in #displayMoment div
+      var eDisplayMoment = document.getElementById('Tanggal');
+      eDisplayMoment.innerHTML = selisih;
+      
+      // display value of Date object in #displayJsDate div
+      var eDisplayDate = document.getElementById('displayJsDate');
+      eDisplayDate.innerHTML = NowDate;
+    })();
+    </script>
+
+  <script src="cdnjs.cloudflare.com/ajax/libs/moment.js/2.7.0/moment.min.js" type="text/javascript"></script>
   <script src="../../js/jquery-3.3.1.min.js"></script>
   <script src="../../js/popper.min.js"></script>
   <script src="../../js/bootstrap.min.js" c></script>
