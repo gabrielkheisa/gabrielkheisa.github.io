@@ -1,2 +1,3 @@
 # https://gabrielkheisa.xyz
-[I'm an inline-style link with title](https://www.google.com "Google's Homepage")
+Tools :
+[Bold Italic](https://gabrielkheisa.xyz/app/bolditalic "Bold Italic")
