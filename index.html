@@ -433,12 +433,54 @@ Collapse all tabs
 
   <script src="https://gabrielkheisa.github.io/js/ig/jquery.instagramFeed.js"></script>
 
-  <script>
+<script>
     (function($){
         $(window).on('load', function(){
             $.instagramFeed({
                 'username': 'gabriel_kheisa',
                 'container': "#instagram-feed-demo",
+                'display_profile': true,
+                'display_biography': true,
+                'display_gallery': true,
+                'display_captions': true,
+                'max_tries': 8,
+                'callback': null,
+                'styling': true,
+                'items': 8,
+                'items_per_row': 4,
+                'margin': 1,
+                'lazy_load': true,
+                'on_error': console.error
+            });
+        });
+    })(jQuery);
+
+    (function($){
+        $(window).on('load', function(){
+            $.instagramFeed({
+                'username': 'arduino_craft',
+                'container': "#instagram-feed-demo2",
+                'display_profile': true,
+                'display_biography': true,
+                'display_gallery': true,
+                'display_captions': true,
+                'max_tries': 8,
+                'callback': null,
+                'styling': true,
+                'items': 8,
+                'items_per_row': 4,
+                'margin': 1,
+                'lazy_load': true,
+                'on_error': console.error
+            });
+        });
+    })(jQuery);
+
+    (function($){
+        $(window).on('load', function(){
+            $.instagramFeed({
+                'username': 'gabriel_kheisa.arts',
+                'container': "#instagram-feed-demo3",
                 'display_profile': true,
                 'display_biography': true,
                 'display_gallery': true,
