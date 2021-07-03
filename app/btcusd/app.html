@@ -1,0 +1,15 @@
+<link rel="stylesheet" href="../../css/btcusd.css">
+<script src="https://use.typekit.net/tou5pbt.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+<script src="../../js/btcusd/btcusd.js"></script>
+
+<script>try{Typekit.load({ async: true });}catch(e){}</script>
+
+<div class="btc-badge">
+    <div class="card">
+        <p>Bitcoin price 1min</p>
+        <h1>${{ btcUSD }}</h1>
+        <p :class="upDown">${{ num }}</p>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 125"><path d="M50 30L30 40 10 10v80h80V50L70 60"/></svg>
+    </div>
+</div>
